@@ -32,11 +32,11 @@ public class Bus extends PublicTransportation {
 			return;
 		}
 
-		this.status = status;
-
 		if (status == BusStatus.GARAGE) {
 			numberOfPassengers = 0;
 		}
+
+		this.status = status;
 	}
 
 	@Override

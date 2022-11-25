@@ -1,22 +1,23 @@
 package transport;
 
+import util.Utils;
+
 public class Taxi extends PublicTransportation {
 	private static int TAXI_ID = 0;
+	private static int FUEL_LOWER_LIMIT = 10;
+	private static int CAPACITY = 4;
+	private static int FEE = 3000;
+	private static int FEE_FOR_EXCEED_DISTANCE = 1000;
+	private static int BASIC_FEE_DISTANCE = 1;
 
 	private Destination destination;
-	private int basicFeeDistance;
-	private int feeForDistance;
 
 	public Taxi() {
 		vehicleNumber = TAXI_ID++;
 		fuelingAmount = 100;
-		fee = 3000;
 		velocity = 0;
 		numberOfPassengers = 0;
-		capacity = 4;
 		status = TaxiStatus.NORMAL;
-		basicFeeDistance = 1;
-		feeForDistance = 1000;
 		destination = null;
 	}
 
@@ -29,21 +30,7 @@ public class Taxi extends PublicTransportation {
 			return;
 		}
 
-		// 추가
-		changeVelocity(40);
-		fuelingAmount -= 10;
-	}
-
-	@Override
-	public void changeVelocity(int velocity) {
-		// 요구사항
-		this.velocity += velocity;
-		if (velocity < 0) {
-			velocity = 0;
-		}
-
-		// 추가
-		fuelingAmount -= 2;
+		status = TaxiStatus.NORMAL;
 	}
 
 	@Override
@@ -64,44 +51,38 @@ public class Taxi extends PublicTransportation {
 			return;
 		}
 
-		if (numberOfPassengers + passengers > capacity) {
+		if (numberOfPassengers + passengers > CAPACITY) {
 			System.out.println("탑승 인원을 초과했습니다.");
 			return;
 		}
 		numberOfPassengers += passengers;
 		status = TaxiStatus.RUN;
-
-		// 추가
-		fuelingAmount -= 2;
 	}
 
 	private int calculateFeePerDistance() {
-		int exceedDistance = destination.getDistance() - basicFeeDistance;
+		int exceedDistance = destination.getDistance() - BASIC_FEE_DISTANCE;
 		if (exceedDistance < 0) {
 			exceedDistance = 0;
 		}
-		return feeForDistance *= exceedDistance;
+		return FEE_FOR_EXCEED_DISTANCE *= exceedDistance;
 	}
 
-	@Override
-	public void changeFuel(int amount) {
-		fuelingAmount += amount;
-		if (fuelingAmount < 0) {
-			fuelingAmount = 0;
-		}
-		if (fuelingAmount > 100) {
-			fuelingAmount = 100;
-		}
-	}
 
 	@Override
 	protected boolean checkFuel() {
-		return false;
+		if (fuelingAmount < FUEL_LOWER_LIMIT) {
+			System.out.println(Utils.convertRedErrorMsg("주유 필요"));
+			changeState(TaxiStatus.IMPOSSIBLE);
+			return false;
+		}
+
+		return true;
 	}
 
+	@Override
 	public void pay() {
 		int exceedFee = calculateFeePerDistance();
-		int payAmount = fee + exceedFee;
+		int payAmount = FEE + exceedFee;
 		System.out.println("최종 요금 " + payAmount + " 원");
 	}
 }

@@ -1,12 +1,11 @@
 package transport;
 
-public abstract class PublicTransportation {
+public abstract class PublicTransportation implements Payable {
 	protected int vehicleNumber;
 	protected int fuelingAmount;
 	protected int velocity;
 	protected int numberOfPassengers;
-	protected int capacity;
-	protected int fee;
+
 	protected TransportationStatus status;
 
 	public boolean isSameNumber(PublicTransportation transportation) {
