@@ -1,7 +1,5 @@
 package transport;
 
-import java.util.UUID;
-
 public class Taxi extends PublicTransportation {
 	private static int TAXI_ID = 0;
 
@@ -11,7 +9,7 @@ public class Taxi extends PublicTransportation {
 
 	public Taxi() {
 		vehicleNumber = TAXI_ID++;
-		refuelingAmount = 100;
+		fuelingAmount = 100;
 		fee = 3000;
 		velocity = 0;
 		numberOfPassengers = 0;
@@ -25,7 +23,7 @@ public class Taxi extends PublicTransportation {
 	@Override
 	public void departure() {
 		// 요구사항
-		if (refuelingAmount < 10) {
+		if (fuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
 			status = TaxiStatus.NORMAL;
 			return;
@@ -33,7 +31,7 @@ public class Taxi extends PublicTransportation {
 
 		// 추가
 		changeVelocity(40);
-		refuelingAmount -= 10;
+		fuelingAmount -= 10;
 	}
 
 	@Override
@@ -45,7 +43,7 @@ public class Taxi extends PublicTransportation {
 		}
 
 		// 추가
-		refuelingAmount -= 2;
+		fuelingAmount -= 2;
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public class Taxi extends PublicTransportation {
 		status = TaxiStatus.RUN;
 
 		// 추가
-		refuelingAmount -= 2;
+		fuelingAmount -= 2;
 	}
 
 
@@ -93,6 +91,17 @@ public class Taxi extends PublicTransportation {
 		}
 
 		return transportation.vehicleNumber == this.vehicleNumber;
+	}
+
+	@Override
+	public void fuelAdd(int amount) {
+		fuelingAmount += amount;
+		if (fuelingAmount < 0) {
+			fuelingAmount = 0;
+		}
+		if (fuelingAmount > 100) {
+			fuelingAmount = 100;
+		}
 	}
 
 	public void pay() {

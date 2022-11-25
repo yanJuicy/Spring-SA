@@ -2,7 +2,7 @@ package transport;
 
 public abstract class PublicTransportation {
 	protected int vehicleNumber;
-	protected int refuelingAmount;
+	protected int fuelingAmount;
 	protected int numberOfPassengers;
 	protected int capacity;
 	protected int velocity;
@@ -17,4 +17,5 @@ public abstract class PublicTransportation {
 
 	public abstract void boardingPassengers(int passengers);
 	public abstract boolean isSameNumber(PublicTransportation transportation);
+	public abstract void fuelAdd(int amount);
 }

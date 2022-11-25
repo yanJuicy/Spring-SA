@@ -7,7 +7,7 @@ public class Bus extends PublicTransportation {
 		vehicleNumber = BUS_ID++;
 		numberOfPassengers = 0;
 		capacity = 30;
-		refuelingAmount = 100;
+		fuelingAmount = 100;
 		velocity = 0;
 		status = BusStatus.RUN;
 		fee = 1000;
@@ -15,7 +15,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void departure() {
-		if (refuelingAmount < 10) {
+		if (fuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
 			status = BusStatus.GARAGE;
 			return;
@@ -24,7 +24,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void changeVelocity(int velocity) {
-		if (refuelingAmount < 10) {
+		if (fuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
 			status = BusStatus.GARAGE;
 			return;
@@ -72,9 +72,23 @@ public class Bus extends PublicTransportation {
 	}
 
 	@Override
+	public void fuelAdd(int amount) {
+		fuelingAmount += amount;
+		if (fuelingAmount < 0) {
+			fuelingAmount = 0;
+		}
+		if (fuelingAmount > 100) {
+			fuelingAmount = 100;
+		}
+	}
+
+	@Override
 	public String toString() {
 		return "탑승 승객 수 = " + numberOfPassengers +
 			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
-			"\n요금 확인 = " + fee;
+			"\n주유량 = " + fuelingAmount +
+			"\n상태 = " + status +
+			"\n요금 확인 = " + fee +
+			"\n";
 	}
 }
