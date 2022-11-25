@@ -7,6 +7,8 @@ public abstract class PublicTransportation implements Payable {
 	protected int fuelingAmount;
 	protected int velocity;
 	protected int numberOfPassengers;
+	protected int capacity;
+	protected int fee;
 	protected Destination destination;
 
 	protected TransportationStatus status;

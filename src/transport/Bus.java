@@ -5,14 +5,14 @@ import util.Utils;
 public class Bus extends PublicTransportation {
 	private static int BUS_ID = 0;
 	private static int FUEL_LOWER_LIMIT = 10;
-	private static int CAPACITY = 30;
-	private static int FEE = 1000;
 
 	public Bus() {
 		vehicleNumber = BUS_ID++;
-		numberOfPassengers = 0;
 		fuelingAmount = 100;
 		velocity = 0;
+		numberOfPassengers = 0;
+		capacity = 30;
+		fee = 1000;
 		status = BusStatus.RUN;
 	}
 
@@ -46,7 +46,7 @@ public class Bus extends PublicTransportation {
 			return;
 		}
 
-		if (numberOfPassengers + passengers > CAPACITY) {
+		if (numberOfPassengers + passengers > capacity) {
 			System.out.println(Utils.convertRedErrorMsg("최대 승객 수 초과"));
 			return;
 		}
@@ -68,10 +68,10 @@ public class Bus extends PublicTransportation {
 	@Override
 	public String toString() {
 		return "탑승 승객 수 = " + numberOfPassengers +
-			"\n잔여 승객 수 = " + (CAPACITY - numberOfPassengers) +
+			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
 			"\n주유량 = " + fuelingAmount +
 			"\n상태 = " + status +
-			"\n요금 확인 = " + numberOfPassengers * FEE +
+			"\n요금 확인 = " + numberOfPassengers * fee +
 			"\n";
 	}
 }

@@ -10,7 +10,14 @@ public class Destination {
 		this.distance = distance;
 	}
 
-	public int getDistance() {
-		return distance;
+	public int calculateExceedDistance(int basicDistance) {
+		return distance - basicDistance < 0 ? 0 : distance - basicDistance;
+	}
+
+	@Override
+	public String toString() {
+		return "목적지 이름 = " + name +
+			"\n목적지까지 거리 = " + distance +
+			"\n";
 	}
 }
