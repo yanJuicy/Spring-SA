@@ -8,6 +8,7 @@ public abstract class PublicTransportation {
 	protected int capacity;
 	protected int fee;
 	protected TransportationStatus status;
+
 	public boolean isSameNumber(PublicTransportation transportation) {
 		if (!transportation.getClass().isInstance(this)) {
 			return false;
@@ -16,12 +17,31 @@ public abstract class PublicTransportation {
 		return transportation.vehicleNumber == this.vehicleNumber;
 	}
 
-	public abstract void departure();
+	public void changeVelocity(int velocity) {
+		if (!checkFuel()) {
+			return;
+		}
 
-	public abstract void changeVelocity(int velocity);
+		this.velocity += velocity;
+		if (velocity < 0) {
+			velocity = 0;
+		}
+	}
+
+	public void changeFuel(int amount) {
+		fuelingAmount += amount;
+		checkFuel();
+
+		if (fuelingAmount < 0) {
+			fuelingAmount = 0;
+		}
+	}
+
+	public abstract void departure();
 
 	public abstract void changeState(TransportationStatus status);
 
 	public abstract void boardingPassengers(int passengers);
-	public abstract void changeFuel(int amount);
+
+	protected abstract boolean checkFuel();
 }

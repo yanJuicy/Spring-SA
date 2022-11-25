@@ -2,6 +2,7 @@ package transport;
 
 public class Bus extends PublicTransportation {
 	private static int BUS_ID = 0;
+	private static int FUEL_LOWER_LIMIT = 10;
 
 	private int feeTotal;
 
@@ -26,18 +27,6 @@ public class Bus extends PublicTransportation {
 	}
 
 	@Override
-	public void changeVelocity(int velocity) {
-		if (!checkFuel()) {
-			return;
-		}
-
-		this.velocity += velocity;
-		if (velocity < 0) {
-			velocity = 0;
-		}
-	}
-
-	@Override
 	public void changeState(TransportationStatus status) {
 		if (!(status instanceof BusStatus)) {
 			System.out.println("\u001B[31m" + "다른 대중교통의 상태 값 입니다." + "\u001B[0m");
@@ -54,12 +43,12 @@ public class Bus extends PublicTransportation {
 	@Override
 	public void boardingPassengers(int passengers) {
 		if (status != BusStatus.RUN) {
-			System.out.println("\u001B[31m" + "차량이 운행중이지 않습니다." + "\u001B[0m");
+			System.out.println("\u001B[31m" + "차량이 운행중이지 않습니다." + "\u001B[0m" + "\n");
 			return;
 		}
 
 		if (numberOfPassengers + passengers > capacity) {
-			System.out.println("\u001B[31m" + "최대 승객 수 초과" + "\u001B[0m");
+			System.out.println("\u001B[31m" + "최대 승객 수 초과" + "\u001B[0m" + "\n");
 			clearPassenger();
 			return;
 		}
@@ -69,20 +58,8 @@ public class Bus extends PublicTransportation {
 	}
 
 	@Override
-	public void changeFuel(int amount) {
-		fuelingAmount += amount;
-		checkFuel();
-
-		if (fuelingAmount < 0) {
-			fuelingAmount = 0;
-		}
-		if (fuelingAmount > 100) {
-			fuelingAmount = 100;
-		}
-	}
-
-	private boolean checkFuel() {
-		if (fuelingAmount < 10) {
+	protected boolean checkFuel() {
+		if (fuelingAmount < FUEL_LOWER_LIMIT) {
 			System.out.println("\u001B[31m" + "주유 필요" + "\u001B[0m" + "\n");
 			changeState(BusStatus.GARAGE);
 			return false;

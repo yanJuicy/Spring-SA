@@ -94,6 +94,11 @@ public class Taxi extends PublicTransportation {
 		}
 	}
 
+	@Override
+	protected boolean checkFuel() {
+		return false;
+	}
+
 	public void pay() {
 		int exceedFee = calculateFeePerDistance();
 		int payAmount = fee + exceedFee;
