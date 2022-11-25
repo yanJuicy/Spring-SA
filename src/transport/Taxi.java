@@ -14,7 +14,7 @@ public class Taxi extends PublicTransportation {
 		fee = 3000;
 		velocity = 0;
 		capacity = 4;
-		status = TransportationStatus.TAXI_NORMAL;
+		status = TaxiStatus.NORMAL;
 		basicMoveDistance = 1;
 		feeForDistance = 1000;
 		destination = null;
@@ -24,7 +24,7 @@ public class Taxi extends PublicTransportation {
 	public void departure() {
 		if (refuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
-			status = TransportationStatus.BUS_GARAGE;
+			status = TaxiStatus.NORMAL;
 			return;
 		}
 
@@ -45,7 +45,7 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		if (status != TransportationStatus.TAXI_NORMAL) {
+		if (status != TaxiStatus.NORMAL) {
 			System.out.println("차량이 운행중이지 않습니다.");
 			return;
 		}
@@ -55,7 +55,7 @@ public class Taxi extends PublicTransportation {
 			return;
 		}
 
-		status = TransportationStatus.TAXI_RUN;
+		status = TaxiStatus.RUN;
 	}
 
 

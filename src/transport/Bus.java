@@ -12,26 +12,30 @@ public class Bus extends PublicTransportation {
 		capacity = 30;
 		refuelingAmount = 100;
 		velocity = 0;
-		status = TransportationStatus.BUS_RUN;
+		status = BusStatus.RUN;
 		fee = 1000;
 	}
 
 	@Override
 	public void departure() {
+		// 요구사항
 		if (refuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
-			status = TransportationStatus.BUS_GARAGE;
+			status = BusStatus.GARAGE;
 			return;
 		}
 
-
+		// 추가
+		changeVelocity(40);
+		refuelingAmount -= 10;
 	}
 
 	@Override
 	public void changeVelocity(int velocity) {
+		// 요구사항
 		if (refuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
-			status = TransportationStatus.BUS_GARAGE;
+			status = BusStatus.GARAGE;
 			return;
 		}
 
@@ -39,6 +43,9 @@ public class Bus extends PublicTransportation {
 		if (velocity < 0) {
 			velocity = 0;
 		}
+
+		// 추가
+		refuelingAmount -= 2;
 	}
 
 	@Override
@@ -48,7 +55,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		if (status != TransportationStatus.BUS_RUN) {
+		if (status != BusStatus.RUN) {
 			System.out.println("차량이 운행중이지 않습니다.");
 			return;
 		}
