@@ -1,5 +1,7 @@
 package transport;
 
+import util.Utils;
+
 public class Bus extends PublicTransportation {
 	private static int BUS_ID = 0;
 	private static int FUEL_LOWER_LIMIT = 10;
@@ -29,7 +31,7 @@ public class Bus extends PublicTransportation {
 	@Override
 	public void changeState(TransportationStatus status) {
 		if (!(status instanceof BusStatus)) {
-			System.out.println("\u001B[31m" + "다른 대중교통의 상태 값 입니다." + "\u001B[0m");
+			System.out.println(Utils.convertRedErrorMsg("다른 대중교통의 상태 값"));
 			return;
 		}
 
@@ -43,12 +45,12 @@ public class Bus extends PublicTransportation {
 	@Override
 	public void boardingPassengers(int passengers) {
 		if (status != BusStatus.RUN) {
-			System.out.println("\u001B[31m" + "차량이 운행중이지 않습니다." + "\u001B[0m" + "\n");
+			System.out.println(Utils.convertRedErrorMsg("차량이 운행중이지 않습니다."));
 			return;
 		}
 
 		if (numberOfPassengers + passengers > capacity) {
-			System.out.println("\u001B[31m" + "최대 승객 수 초과" + "\u001B[0m" + "\n");
+			System.out.println(Utils.convertRedErrorMsg("최대 승객 수 초과"));
 			clearPassenger();
 			return;
 		}
@@ -60,7 +62,7 @@ public class Bus extends PublicTransportation {
 	@Override
 	protected boolean checkFuel() {
 		if (fuelingAmount < FUEL_LOWER_LIMIT) {
-			System.out.println("\u001B[31m" + "주유 필요" + "\u001B[0m" + "\n");
+			System.out.println(Utils.convertRedErrorMsg("주유 필요"));
 			changeState(BusStatus.GARAGE);
 			return false;
 		}
