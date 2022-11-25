@@ -12,12 +12,6 @@ public class Vehicle {
 		this.velocity = velocity;
 	}
 
-	@Override
-	public String toString() {
-		return "\n차량번호 = " + vehicleNumber +
-			"\n주유량 = " + fuelingAmount;
-	}
-
 	public int getVehicleNumber() {
 		return vehicleNumber;
 	}
@@ -36,5 +30,11 @@ public class Vehicle {
 
 	public void setFuelingAmount(int fuelingAmount) {
 		this.fuelingAmount = fuelingAmount;
+	}
+
+	@Override
+	public String toString() {
+		return "\n차량번호 = " + vehicleNumber +
+			"\n주유량 = " + fuelingAmount;
 	}
 }
