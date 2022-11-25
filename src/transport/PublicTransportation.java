@@ -22,19 +22,12 @@ public abstract class PublicTransportation {
 			return;
 		}
 
-		this.velocity += velocity;
-		if (velocity < 0) {
-			velocity = 0;
-		}
+		this.velocity = this.velocity + velocity < 0 ? 0 : this.velocity + velocity;
 	}
 
 	public void changeFuel(int amount) {
-		fuelingAmount += amount;
+		fuelingAmount = fuelingAmount + amount < 0 ? 0 : fuelingAmount + amount;
 		checkFuel();
-
-		if (fuelingAmount < 0) {
-			fuelingAmount = 0;
-		}
 	}
 
 	public abstract void departure();

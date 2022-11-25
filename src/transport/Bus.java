@@ -5,18 +5,15 @@ import util.Utils;
 public class Bus extends PublicTransportation {
 	private static int BUS_ID = 0;
 	private static int FUEL_LOWER_LIMIT = 10;
-
-	private int feeTotal;
+	private static int CAPACITY = 30;
+	private static int FEE = 1000;
 
 	public Bus() {
 		vehicleNumber = BUS_ID++;
 		numberOfPassengers = 0;
-		capacity = 30;
 		fuelingAmount = 100;
 		velocity = 0;
 		status = BusStatus.RUN;
-		fee = 1000;
-		feeTotal = 0;
 	}
 
 	@Override
@@ -38,7 +35,7 @@ public class Bus extends PublicTransportation {
 		this.status = status;
 
 		if (status == BusStatus.GARAGE) {
-			clearPassenger();
+			numberOfPassengers = 0;
 		}
 	}
 
@@ -49,14 +46,12 @@ public class Bus extends PublicTransportation {
 			return;
 		}
 
-		if (numberOfPassengers + passengers > capacity) {
+		if (numberOfPassengers + passengers > CAPACITY) {
 			System.out.println(Utils.convertRedErrorMsg("최대 승객 수 초과"));
-			clearPassenger();
 			return;
 		}
 
 		numberOfPassengers += passengers;
-		feeTotal += fee * numberOfPassengers;
 	}
 
 	@Override
@@ -70,18 +65,13 @@ public class Bus extends PublicTransportation {
 		return true;
 	}
 
-	private void clearPassenger() {
-		numberOfPassengers = 0;
-		feeTotal = 0;
-	}
-
 	@Override
 	public String toString() {
 		return "탑승 승객 수 = " + numberOfPassengers +
-			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
+			"\n잔여 승객 수 = " + (CAPACITY - numberOfPassengers) +
 			"\n주유량 = " + fuelingAmount +
 			"\n상태 = " + status +
-			"\n요금 확인 = " + feeTotal +
+			"\n요금 확인 = " + numberOfPassengers * FEE +
 			"\n";
 	}
 }
