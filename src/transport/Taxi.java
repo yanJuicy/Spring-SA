@@ -75,22 +75,12 @@ public class Taxi extends PublicTransportation {
 		fuelingAmount -= 2;
 	}
 
-
 	private int calculateFeePerDistance() {
 		int exceedDistance = destination.getDistance() - basicFeeDistance;
 		if (exceedDistance < 0) {
 			exceedDistance = 0;
 		}
 		return feeForDistance *= exceedDistance;
-	}
-
-	@Override
-	public boolean isSameNumber(PublicTransportation transportation) {
-		if (!transportation.getClass().isInstance(this)) {
-			return false;
-		}
-
-		return transportation.vehicleNumber == this.vehicleNumber;
 	}
 
 	@Override
@@ -107,6 +97,6 @@ public class Taxi extends PublicTransportation {
 	public void pay() {
 		int exceedFee = calculateFeePerDistance();
 		int payAmount = fee + exceedFee;
-		System.out.println("최종 요금 "+ payAmount + " 원");
+		System.out.println("최종 요금 " + payAmount + " 원");
 	}
 }

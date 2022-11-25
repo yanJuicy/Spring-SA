@@ -8,6 +8,13 @@ public abstract class PublicTransportation {
 	protected int capacity;
 	protected int fee;
 	protected TransportationStatus status;
+	public boolean isSameNumber(PublicTransportation transportation) {
+		if (!transportation.getClass().isInstance(this)) {
+			return false;
+		}
+
+		return transportation.vehicleNumber == this.vehicleNumber;
+	}
 
 	public abstract void departure();
 
@@ -16,6 +23,5 @@ public abstract class PublicTransportation {
 	public abstract void changeState(TransportationStatus status);
 
 	public abstract void boardingPassengers(int passengers);
-	public abstract boolean isSameNumber(PublicTransportation transportation);
 	public abstract void changeFuel(int amount);
 }

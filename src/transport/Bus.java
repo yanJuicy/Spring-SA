@@ -69,15 +69,6 @@ public class Bus extends PublicTransportation {
 	}
 
 	@Override
-	public boolean isSameNumber(PublicTransportation transportation) {
-		if (!transportation.getClass().isInstance(this)) {
-			return false;
-		}
-
-		return transportation.vehicleNumber == this.vehicleNumber;
-	}
-
-	@Override
 	public void changeFuel(int amount) {
 		fuelingAmount += amount;
 		checkFuel();
