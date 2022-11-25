@@ -17,7 +17,6 @@ public class Destination {
 	@Override
 	public String toString() {
 		return "목적지 이름 = " + name +
-			"\n목적지까지 거리 = " + distance +
-			"\n";
+			"\n목적지까지 거리 = " + distance + "km";
 	}
 }

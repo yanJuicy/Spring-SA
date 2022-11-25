@@ -8,7 +8,8 @@ public class Taxi extends PublicTransportation {
 
 	private static int FEE_FOR_EXCEED_DISTANCE = 1000;
 	private static int BASIC_FEE_DISTANCE = 1;
-	private Destination destination;
+	private int payAmount;
+	private int totalPay;
 
 	public Taxi() {
 		vehicleNumber = TAXI_ID++;
@@ -19,6 +20,8 @@ public class Taxi extends PublicTransportation {
 		fee = 3000;
 		status = TaxiStatus.NORMAL;
 		destination = null;
+		payAmount = 0;
+		totalPay = 0;
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		if (status != TaxiStatus.NORMAL) {
+		if (status == TaxiStatus.IMPOSSIBLE) {
 			System.out.println(Utils.convertRedErrorMsg("차량이 운행중이지 않습니다."));
 			return;
 		}
@@ -54,6 +57,7 @@ public class Taxi extends PublicTransportation {
 
 		numberOfPassengers += passengers;
 		status = TaxiStatus.RUN;
+		payAmount = calculatePay();
 	}
 
 	private int calculateFeePerDistance() {
@@ -75,8 +79,28 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void pay() {
-		int exceedFee = calculateFeePerDistance();
-		int payAmount = fee + exceedFee;
-		System.out.println("최종 요금 " + payAmount + " 원");
+		numberOfPassengers = 0;
+		totalPay += payAmount;
+		System.out.println("최종 요금 " + payAmount + " 원\n");
+	}
+
+	private int calculatePay() {
+		int exceedDistance = destination.calculateExceedDistance(BASIC_FEE_DISTANCE);
+		int exceedFee = FEE_FOR_EXCEED_DISTANCE *= exceedDistance;
+		int pay = fee + exceedFee;
+		return pay;
+	}
+
+	@Override
+	public String toString() {
+		return "탑승 승객 수 = " + numberOfPassengers +
+			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
+			"\n기본 요금 확인 = " + fee +
+			"\n" + destination +
+			"\n주유량 = " + fuelingAmount +
+			"\n상태 = " + status +
+			"\n지불할 요금 = " + payAmount + "원" +
+			"\n누적 요금 = " + totalPay + "원" +
+			"\n";
 	}
 }
