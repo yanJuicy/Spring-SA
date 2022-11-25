@@ -3,9 +3,8 @@ package transport;
 import util.Payable;
 
 public abstract class PublicTransportation implements Payable {
-	protected int vehicleNumber;
-	protected int fuelingAmount;
-	protected int velocity;
+
+	protected Vehicle vehicle;
 	protected int numberOfPassengers;
 	protected int capacity;
 	protected int fee;
@@ -18,7 +17,7 @@ public abstract class PublicTransportation implements Payable {
 			return false;
 		}
 
-		return transportation.vehicleNumber == this.vehicleNumber;
+		return transportation.vehicle.getVehicleNumber() == this.vehicle.getVehicleNumber();
 	}
 
 	public void changeVelocity(int velocity) {
@@ -26,11 +25,11 @@ public abstract class PublicTransportation implements Payable {
 			return;
 		}
 
-		this.velocity = this.velocity + velocity < 0 ? 0 : this.velocity + velocity;
+		vehicle.setVelocity(vehicle.getVelocity() + velocity < 0 ? 0 : vehicle.getVelocity() + velocity);
 	}
 
 	public void changeFuel(int amount) {
-		fuelingAmount = fuelingAmount + amount < 0 ? 0 : fuelingAmount + amount;
+		vehicle.setFuelingAmount(vehicle.getFuelingAmount() + amount < 0 ? 0 : vehicle.getFuelingAmount() + amount);
 		checkFuel();
 	}
 

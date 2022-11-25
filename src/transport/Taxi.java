@@ -12,9 +12,7 @@ public class Taxi extends PublicTransportation {
 	private int totalPay;
 
 	public Taxi() {
-		vehicleNumber = TAXI_ID++;
-		fuelingAmount = 100;
-		velocity = 0;
+		vehicle = new Vehicle(TAXI_ID++, 100, 0);
 		numberOfPassengers = 0;
 		capacity = 4;
 		fee = 3000;
@@ -60,14 +58,9 @@ public class Taxi extends PublicTransportation {
 		payAmount = calculatePay();
 	}
 
-	private int calculateFeePerDistance() {
-		int exceedDistance = destination.calculateExceedDistance(BASIC_FEE_DISTANCE);
-		return FEE_FOR_EXCEED_DISTANCE *= exceedDistance;
-	}
-
 	@Override
 	protected boolean checkFuel() {
-		if (fuelingAmount < FUEL_LOWER_LIMIT) {
+		if (vehicle.getFuelingAmount() < FUEL_LOWER_LIMIT) {
 			System.out.println(Utils.convertRedErrorMsg("주유 필요"));
 			changeState(TaxiStatus.IMPOSSIBLE);
 			numberOfPassengers = 0;
@@ -93,11 +86,11 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public String toString() {
-		return "탑승 승객 수 = " + numberOfPassengers +
+		return vehicle +
+			"\n탑승 승객 수 = " + numberOfPassengers +
 			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
 			"\n기본 요금 확인 = " + fee +
 			"\n" + destination +
-			"\n주유량 = " + fuelingAmount +
 			"\n상태 = " + status +
 			"\n지불할 요금 = " + payAmount + "원" +
 			"\n누적 요금 = " + totalPay + "원" +

@@ -7,9 +7,7 @@ public class Bus extends PublicTransportation {
 	private static int FUEL_LOWER_LIMIT = 10;
 
 	public Bus() {
-		vehicleNumber = BUS_ID++;
-		fuelingAmount = 100;
-		velocity = 0;
+		vehicle = new Vehicle(BUS_ID++, 100, 0);
 		numberOfPassengers = 0;
 		capacity = 30;
 		fee = 1000;
@@ -56,7 +54,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	protected boolean checkFuel() {
-		if (fuelingAmount < FUEL_LOWER_LIMIT) {
+		if (vehicle.getFuelingAmount() < FUEL_LOWER_LIMIT) {
 			System.out.println(Utils.convertRedErrorMsg("주유 필요"));
 			changeState(BusStatus.GARAGE);
 			return false;
@@ -67,9 +65,9 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public String toString() {
-		return "탑승 승객 수 = " + numberOfPassengers +
+		return vehicle +
+			"\n탑승 승객 수 = " + numberOfPassengers +
 			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
-			"\n주유량 = " + fuelingAmount +
 			"\n상태 = " + status +
 			"\n요금 확인 = " + numberOfPassengers * fee +
 			"\n";
