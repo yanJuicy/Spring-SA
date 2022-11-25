@@ -4,10 +4,9 @@ import java.util.UUID;
 
 public class Bus extends PublicTransportation {
 
-	private int numberOfPassengers;
 
 	public Bus() {
-		number = UUID.randomUUID();
+		vehicleNumber = UUID.randomUUID();
 		numberOfPassengers = 0;
 		capacity = 30;
 		refuelingAmount = 100;
@@ -50,6 +49,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void changeState(TransportationStatus status) {
+		// 요구사항
 		if (!(status instanceof BusStatus)) {
 			System.out.println("다른 대중교통의 상태 값 입니다.");
 			return;
@@ -60,6 +60,7 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
+		// 요구사항
 		if (status != BusStatus.RUN) {
 			System.out.println("차량이 운행중이지 않습니다.");
 			return;
@@ -71,5 +72,8 @@ public class Bus extends PublicTransportation {
 		}
 
 		numberOfPassengers += passengers;
+
+		// 추가
+		refuelingAmount -= 2;
 	}
 }

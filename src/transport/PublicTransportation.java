@@ -3,8 +3,9 @@ package transport;
 import java.util.UUID;
 
 public abstract class PublicTransportation {
-	protected UUID number;
+	protected UUID vehicleNumber;
 	protected int refuelingAmount;
+	protected int numberOfPassengers;
 	protected int capacity;
 
 	protected int velocity;
