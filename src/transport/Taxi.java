@@ -9,7 +9,6 @@ public class Taxi extends PublicTransportation {
 	private static int FEE = 3000;
 	private static int FEE_FOR_EXCEED_DISTANCE = 1000;
 	private static int BASIC_FEE_DISTANCE = 1;
-
 	private Destination destination;
 
 	public Taxi() {
@@ -23,10 +22,7 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void departure() {
-		// 요구사항
-		if (fuelingAmount < 10) {
-			System.out.println("주유량을 확인해 주세요.");
-			status = TaxiStatus.NORMAL;
+		if(!checkFuel()) {
 			return;
 		}
 
@@ -36,7 +32,7 @@ public class Taxi extends PublicTransportation {
 	@Override
 	public void changeState(TransportationStatus status) {
 		if (!(status instanceof TaxiStatus)) {
-			System.out.println("다른 대중교통의 상태 값 입니다.");
+			System.out.println(Utils.convertRedErrorMsg("다른 대중교통의 상태 값"));
 			return;
 		}
 
@@ -45,16 +41,16 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		// 요구사항
 		if (status != TaxiStatus.NORMAL) {
-			System.out.println("차량이 운행중이지 않습니다.");
+			System.out.println(Utils.convertRedErrorMsg("차량이 운행중이지 않습니다."));
 			return;
 		}
 
 		if (numberOfPassengers + passengers > CAPACITY) {
-			System.out.println("탑승 인원을 초과했습니다.");
+			System.out.println(Utils.convertRedErrorMsg("최대 승객 수 초과"));
 			return;
 		}
+
 		numberOfPassengers += passengers;
 		status = TaxiStatus.RUN;
 	}

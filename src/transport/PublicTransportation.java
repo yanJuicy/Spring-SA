@@ -7,6 +7,7 @@ public abstract class PublicTransportation implements Payable {
 	protected int fuelingAmount;
 	protected int velocity;
 	protected int numberOfPassengers;
+	protected Destination destination;
 
 	protected TransportationStatus status;
 
@@ -29,6 +30,10 @@ public abstract class PublicTransportation implements Payable {
 	public void changeFuel(int amount) {
 		fuelingAmount = fuelingAmount + amount < 0 ? 0 : fuelingAmount + amount;
 		checkFuel();
+	}
+
+	public void changeDestination(String name, int distance) {
+		this.destination = new Destination(name, distance);
 	}
 
 	public abstract void departure();
