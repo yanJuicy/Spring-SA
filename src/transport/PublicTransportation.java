@@ -9,7 +9,6 @@ public abstract class PublicTransportation implements Payable {
 	protected int capacity;
 	protected int fee;
 	protected Destination destination;
-
 	protected TransportationStatus status;
 
 	public boolean isSameNumber(PublicTransportation transportation) {
