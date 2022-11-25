@@ -39,8 +39,13 @@ public class Taxi extends PublicTransportation {
 	}
 
 	@Override
-	public void changeState() {
+	public void changeState(TransportationStatus status) {
+		if (!(status instanceof TaxiStatus)) {
+			System.out.println("다른 대중교통의 상태 값 입니다.");
+			return;
+		}
 
+		this.status = status;
 	}
 
 	@Override

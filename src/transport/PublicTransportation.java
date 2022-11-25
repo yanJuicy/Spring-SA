@@ -13,7 +13,7 @@ public abstract class PublicTransportation {
 
 	public abstract void departure();
 	public abstract void changeVelocity(int velocity);
-	public abstract void changeState();
+	public abstract void changeState(TransportationStatus status);
 	public abstract void boardingPassengers(int passengers);
 
 }
