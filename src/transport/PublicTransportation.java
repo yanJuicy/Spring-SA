@@ -1,5 +1,7 @@
 package transport;
 
+import util.Payable;
+
 public abstract class PublicTransportation implements Payable {
 	protected int vehicleNumber;
 	protected int fuelingAmount;
