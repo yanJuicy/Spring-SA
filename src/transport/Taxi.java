@@ -94,7 +94,7 @@ public class Taxi extends PublicTransportation {
 	}
 
 	@Override
-	public void fuelAdd(int amount) {
+	public void changeFuel(int amount) {
 		fuelingAmount += amount;
 		if (fuelingAmount < 0) {
 			fuelingAmount = 0;

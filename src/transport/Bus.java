@@ -3,6 +3,8 @@ package transport;
 public class Bus extends PublicTransportation {
 	private static int BUS_ID = 0;
 
+	private int feeTotal;
+
 	public Bus() {
 		vehicleNumber = BUS_ID++;
 		numberOfPassengers = 0;
@@ -11,22 +13,21 @@ public class Bus extends PublicTransportation {
 		velocity = 0;
 		status = BusStatus.RUN;
 		fee = 1000;
+		feeTotal = 0;
 	}
 
 	@Override
 	public void departure() {
-		if (fuelingAmount < 10) {
-			System.out.println("주유량을 확인해 주세요.");
-			status = BusStatus.GARAGE;
+		if (!checkFuel()) {
 			return;
 		}
+
+		status = BusStatus.RUN;
 	}
 
 	@Override
 	public void changeVelocity(int velocity) {
-		if (fuelingAmount < 10) {
-			System.out.println("주유량을 확인해 주세요.");
-			status = BusStatus.GARAGE;
+		if (!checkFuel()) {
 			return;
 		}
 
@@ -39,27 +40,32 @@ public class Bus extends PublicTransportation {
 	@Override
 	public void changeState(TransportationStatus status) {
 		if (!(status instanceof BusStatus)) {
-			System.out.println("다른 대중교통의 상태 값 입니다.");
+			System.out.println("\u001B[31m" + "다른 대중교통의 상태 값 입니다." + "\u001B[0m");
 			return;
 		}
 
 		this.status = status;
+
+		if (status == BusStatus.GARAGE) {
+			clearPassenger();
+		}
 	}
 
 	@Override
 	public void boardingPassengers(int passengers) {
 		if (status != BusStatus.RUN) {
-			System.out.println("차량이 운행중이지 않습니다.");
+			System.out.println("\u001B[31m" + "차량이 운행중이지 않습니다." + "\u001B[0m");
 			return;
 		}
 
 		if (numberOfPassengers + passengers > capacity) {
-			System.out.println("탑승 인원을 초과했습니다.");
+			System.out.println("\u001B[31m" + "최대 승객 수 초과" + "\u001B[0m");
+			clearPassenger();
 			return;
 		}
 
 		numberOfPassengers += passengers;
-		fee *= numberOfPassengers;
+		feeTotal += fee * numberOfPassengers;
 	}
 
 	@Override
@@ -72,8 +78,10 @@ public class Bus extends PublicTransportation {
 	}
 
 	@Override
-	public void fuelAdd(int amount) {
+	public void changeFuel(int amount) {
 		fuelingAmount += amount;
+		checkFuel();
+
 		if (fuelingAmount < 0) {
 			fuelingAmount = 0;
 		}
@@ -82,13 +90,28 @@ public class Bus extends PublicTransportation {
 		}
 	}
 
+	private boolean checkFuel() {
+		if (fuelingAmount < 10) {
+			System.out.println("\u001B[31m" + "주유 필요" + "\u001B[0m" + "\n");
+			changeState(BusStatus.GARAGE);
+			return false;
+		}
+
+		return true;
+	}
+
+	private void clearPassenger() {
+		numberOfPassengers = 0;
+		feeTotal = 0;
+	}
+
 	@Override
 	public String toString() {
 		return "탑승 승객 수 = " + numberOfPassengers +
 			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
 			"\n주유량 = " + fuelingAmount +
 			"\n상태 = " + status +
-			"\n요금 확인 = " + fee +
+			"\n요금 확인 = " + feeTotal +
 			"\n";
 	}
 }
