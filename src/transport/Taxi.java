@@ -3,13 +3,14 @@ package transport;
 import java.util.UUID;
 
 public class Taxi extends PublicTransportation {
+	private static int TAXI_ID = 0;
 
 	private Destination destination;
 	private int basicFeeDistance;
 	private int feeForDistance;
 
 	public Taxi() {
-		vehicleNumber = UUID.randomUUID();
+		vehicleNumber = TAXI_ID++;
 		refuelingAmount = 100;
 		fee = 3000;
 		velocity = 0;
@@ -83,6 +84,15 @@ public class Taxi extends PublicTransportation {
 			exceedDistance = 0;
 		}
 		return feeForDistance *= exceedDistance;
+	}
+
+	@Override
+	public boolean isSameNumber(PublicTransportation transportation) {
+		if (!transportation.getClass().isInstance(this)) {
+			return false;
+		}
+
+		return transportation.vehicleNumber == this.vehicleNumber;
 	}
 
 	public void pay() {

@@ -1,12 +1,10 @@
 package transport;
 
-import java.util.UUID;
-
 public class Bus extends PublicTransportation {
-
+	private static int BUS_ID = 0;
 
 	public Bus() {
-		vehicleNumber = UUID.randomUUID();
+		vehicleNumber = BUS_ID++;
 		numberOfPassengers = 0;
 		capacity = 30;
 		refuelingAmount = 100;
@@ -17,21 +15,15 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void departure() {
-		// 요구사항
 		if (refuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
 			status = BusStatus.GARAGE;
 			return;
 		}
-
-		// 추가
-		changeVelocity(40);
-		refuelingAmount -= 10;
 	}
 
 	@Override
 	public void changeVelocity(int velocity) {
-		// 요구사항
 		if (refuelingAmount < 10) {
 			System.out.println("주유량을 확인해 주세요.");
 			status = BusStatus.GARAGE;
@@ -42,14 +34,10 @@ public class Bus extends PublicTransportation {
 		if (velocity < 0) {
 			velocity = 0;
 		}
-
-		// 추가
-		refuelingAmount -= 2;
 	}
 
 	@Override
 	public void changeState(TransportationStatus status) {
-		// 요구사항
 		if (!(status instanceof BusStatus)) {
 			System.out.println("다른 대중교통의 상태 값 입니다.");
 			return;
@@ -60,7 +48,6 @@ public class Bus extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		// 요구사항
 		if (status != BusStatus.RUN) {
 			System.out.println("차량이 운행중이지 않습니다.");
 			return;
@@ -72,8 +59,22 @@ public class Bus extends PublicTransportation {
 		}
 
 		numberOfPassengers += passengers;
+		fee *= numberOfPassengers;
+	}
 
-		// 추가
-		refuelingAmount -= 2;
+	@Override
+	public boolean isSameNumber(PublicTransportation transportation) {
+		if (!transportation.getClass().isInstance(this)) {
+			return false;
+		}
+
+		return transportation.vehicleNumber == this.vehicleNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "탑승 승객 수 = " + numberOfPassengers +
+			"\n잔여 승객 수 = " + (capacity - numberOfPassengers) +
+			"\n요금 확인 = " + fee;
 	}
 }
