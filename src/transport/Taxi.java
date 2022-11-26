@@ -17,7 +17,6 @@ public class Taxi extends PublicTransportation {
 		capacity = 4;
 		fee = 3000;
 		status = TaxiStatus.NORMAL;
-		destination = null;
 		payAmount = 0;
 		totalPay = 0;
 	}
@@ -43,7 +42,7 @@ public class Taxi extends PublicTransportation {
 
 	@Override
 	public void boardingPassengers(int passengers) {
-		if (status == TaxiStatus.IMPOSSIBLE) {
+		if (status != TaxiStatus.NORMAL) {
 			System.out.println(Utils.convertRedErrorMsg("차량이 운행중이지 않습니다."));
 			return;
 		}
@@ -73,6 +72,7 @@ public class Taxi extends PublicTransportation {
 	@Override
 	public void pay() {
 		numberOfPassengers = 0;
+		status = TaxiStatus.NORMAL;
 		totalPay += payAmount;
 		System.out.println("최종 요금 " + payAmount + " 원\n");
 	}
