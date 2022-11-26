@@ -24,11 +24,11 @@ public abstract class PublicTransportation implements Payable {
 			return;
 		}
 
-		vehicle.setVelocity(vehicle.getVelocity() + velocity < 0 ? 0 : vehicle.getVelocity() + velocity);
+		vehicle.changeVelocity(velocity);
 	}
 
 	public void changeFuel(int amount) {
-		vehicle.setFuelingAmount(vehicle.getFuelingAmount() + amount < 0 ? 0 : vehicle.getFuelingAmount() + amount);
+		vehicle.changeFuel(amount);
 		checkFuel();
 	}
 

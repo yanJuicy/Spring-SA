@@ -24,12 +24,12 @@ public class Vehicle {
 		return velocity;
 	}
 
-	public void setVelocity(int velocity) {
-		this.velocity = velocity;
+	public void changeVelocity(int velocity) {
+		this.velocity = this.velocity + velocity < 0 ? 0 : this.velocity + velocity;
 	}
 
-	public void setFuelingAmount(int fuelingAmount) {
-		this.fuelingAmount = fuelingAmount;
+	public void changeFuel(int fuelingAmount) {
+		this.fuelingAmount = this.fuelingAmount + fuelingAmount < 0 ? 0 : this.fuelingAmount + fuelingAmount;
 	}
 
 	@Override
