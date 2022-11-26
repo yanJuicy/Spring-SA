@@ -3,10 +3,10 @@ package transport;
 import util.Utils;
 
 public class Taxi extends PublicTransportation {
+	private static final int FUEL_LOWER_LIMIT = 10;
+	private static final int FEE_FOR_EXCEED_DISTANCE = 1000;
+	private static final int BASIC_FEE_DISTANCE = 1;
 	private static int TAXI_ID = 0;
-	private static int FUEL_LOWER_LIMIT = 10;
-	private static int FEE_FOR_EXCEED_DISTANCE = 1000;
-	private static int BASIC_FEE_DISTANCE = 1;
 
 	private int payAmount;
 	private int totalPay;

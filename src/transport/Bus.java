@@ -3,8 +3,8 @@ package transport;
 import util.Utils;
 
 public class Bus extends PublicTransportation {
+	private static final int FUEL_LOWER_LIMIT = 10;
 	private static int BUS_ID = 0;
-	private static int FUEL_LOWER_LIMIT = 10;
 
 	public Bus() {
 		vehicle = new Vehicle(BUS_ID++, 100, 0);
