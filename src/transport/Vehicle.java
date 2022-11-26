@@ -32,6 +32,10 @@ public class Vehicle {
 		this.fuelingAmount = this.fuelingAmount + fuelingAmount < 0 ? 0 : this.fuelingAmount + fuelingAmount;
 	}
 
+	public boolean isSameNumber(Vehicle vehicle) {
+		return this.vehicleNumber == vehicle.getVehicleNumber();
+	}
+
 	@Override
 	public String toString() {
 		return "\n차량번호 = " + vehicleNumber +

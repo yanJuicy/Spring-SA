@@ -16,7 +16,7 @@ public abstract class PublicTransportation implements Payable {
 			return false;
 		}
 
-		return transportation.vehicle.getVehicleNumber() == this.vehicle.getVehicleNumber();
+		return vehicle.isSameNumber(transportation.vehicle);
 	}
 
 	public void changeVelocity(int velocity) {
