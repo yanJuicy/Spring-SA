@@ -1,5 +1,8 @@
-package transport;
+package transport.bus;
 
+import transport.PublicTransportation;
+import transport.TransportationStatus;
+import transport.Vehicle;
 import util.Utils;
 
 public class Bus extends PublicTransportation {

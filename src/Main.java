@@ -1,7 +1,7 @@
-import transport.Bus;
-import transport.BusStatus;
+import transport.bus.Bus;
+import transport.bus.BusStatus;
 import transport.PublicTransportation;
-import transport.Taxi;
+import transport.taxi.Taxi;
 
 public class Main {
 	public static void main(String[] args) {
